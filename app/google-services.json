@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "719517980211",
+    "project_id": "traveltimer2-a5a0d",
+    "storage_bucket": "traveltimer2-a5a0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719517980211:android:9b06fa18353d9d2b83f546",
+        "android_client_info": {
+          "package_name": "com.example.traveltimer2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719517980211-6h6gh0sqh4clqq5i11klsm2kq36uhdau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDssB3bCL9TbA2qdzwnA0KT2z_PrFbdIzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719517980211-6h6gh0sqh4clqq5i11klsm2kq36uhdau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
