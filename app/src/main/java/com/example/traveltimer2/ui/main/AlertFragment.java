@@ -41,7 +41,7 @@ public class AlertFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "http://192.168.148.19/CRUDAPI/read.php";
+
 
     public AlertFragment() {
         // Required empty public constructor
@@ -69,6 +69,8 @@ public class AlertFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        String url =  getActivity().getApplicationContext().getString(R.string.read);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 //            String url="";

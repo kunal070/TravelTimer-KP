@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,13 +23,12 @@ import com.android.volley.toolbox.Volley;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class MyListAdapter extends ArrayAdapter<String> {
 
     private final Context context;
     private final ArrayList<String> items;
-    private String url = "http://192.168.132.19/CRUDAPI/delete.php";
-
     public MyListAdapter(Context context, ArrayList<String> items) {
         super(context, R.layout.single_alarm, items);
         this.context = context;
@@ -38,6 +39,8 @@ public class MyListAdapter extends ArrayAdapter<String> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.single_alarm, parent, false);
+
+        String url = context.getApplicationContext().getString(R.string.delete);
 
         TextView textView = (TextView) rowView.findViewById(R.id.list_item_text);
         Button button = (Button) rowView.findViewById(R.id.list_item_delete);

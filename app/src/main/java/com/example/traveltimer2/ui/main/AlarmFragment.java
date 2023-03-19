@@ -1,5 +1,7 @@
 package com.example.traveltimer2.ui.main;
 
+import static com.example.traveltimer2.Constants.addresses;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -41,14 +43,8 @@ public class AlarmFragment extends Fragment {
 
     private ListView listView;
     private DatabaseReference reff;
-    ArrayList<String> addresses=new ArrayList<>();
-    private ArrayAdapter<String> adapter;
-    private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
-    private String url = "http://192.168.148.19/CRUDAPI/read.php";
-    private ArrayList<String> items;
-//    private List<ItemList> list=new ArrayList<>();
-//    private CustomListAdapter adapter;
+
+
 
     public AlarmFragment() {
 
@@ -80,7 +76,7 @@ public class AlarmFragment extends Fragment {
 
         //this is valid code
 
-
+        String url =  getActivity().getApplicationContext().getString(R.string.read);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 //            String url="";

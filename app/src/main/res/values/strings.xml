@@ -1,8 +1,19 @@
 <resources>
     <string name="app_name">Travel Timer</string>
     <string name="tab_text_1">Alarms</string>
+    <string name="api">http://192.168.207.19/CRUDAPI</string>
     <string name="tab_text_2">Alerts</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="read">http://192.168.84.19/CRUDAPI/read.php</string>
+    <string name="delete">http://192.168.84.19/CRUDAPI/delete.php</string>
+    <string name="create">http://192.168.84.19/CRUDAPI/create.php</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_welco">
+Hello , welcome back to our account !
+</string>
+    <string name="email_addre">
+Email address
+</string>
+
 </resources>

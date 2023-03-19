@@ -37,10 +37,11 @@ public class markerClickActivity extends AppCompatActivity {
     SeekBar seekBar;
     Intent intent;
     Statement st;
+    String url ;
 //    DatabaseReference reff;
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
-    private String url = "http://192.168.148.19//CRUDAPI/create.php";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,8 @@ public class markerClickActivity extends AppCompatActivity {
         setContentView(R.layout.activity_marker_click);
 //        reff= FirebaseDatabase.getInstance().getReference().child("Data");
         intent=getIntent();
+
+         url = getApplicationContext().getString(R.string.create);
 
         textForAddress = "Address : "+intent.getStringExtra("Address_massage");
 

@@ -17,16 +17,14 @@ import android.widget.TextView;
 
 public class Splash_screen extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 2000; // 2 seconds
+    private static int SPLASH_TIME_OUT = 1500; // 2 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide(); // hide the title bar
-//Remove notification bar
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
 
         ImageView splashIcon = (ImageView) findViewById(R.id.alarm_icon);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.splash_animation2);
@@ -41,7 +39,7 @@ public class Splash_screen extends AppCompatActivity {
 
             @Override
             public void run() {
-                Intent i = new Intent(Splash_screen.this, MainActivity.class);
+                Intent i = new Intent(Splash_screen.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }

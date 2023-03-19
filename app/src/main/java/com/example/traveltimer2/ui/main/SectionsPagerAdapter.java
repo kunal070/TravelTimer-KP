@@ -10,10 +10,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.traveltimer2.R;
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
