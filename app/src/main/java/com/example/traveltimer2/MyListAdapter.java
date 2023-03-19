@@ -26,7 +26,7 @@ public class MyListAdapter extends ArrayAdapter<String> {
 
     private final Context context;
     private final ArrayList<String> items;
-    private String url = "http://192.168.148.19/CRUDAPI/delete.php";
+    private String url = "http://192.168.132.19/CRUDAPI/delete.php";
 
     public MyListAdapter(Context context, ArrayList<String> items) {
         super(context, R.layout.single_alarm, items);

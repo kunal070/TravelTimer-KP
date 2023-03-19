@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -35,12 +36,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,LocationListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     List<Address> listGeoCoder;
-    private static final int LOCATION_PERMISSION_CODE=101;
+    private static final int LOCATION_PERMISSION_CODE = 101;
     private String address;
     LocationManager locationManager;
     SearchView searchView;
@@ -56,45 +57,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        searchView=findViewById(R.id.sv_location);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String location=searchView.getQuery().toString();
-                List<Address> addressList=null;
-                if(location !=null || !location.equals("")){
-
-                    Geocoder geocoder=new Geocoder(MapsActivity.this);
-                    try{
-                        addressList = geocoder.getFromLocationName(location,1);
-                    }catch(Exception e){
-                        e.printStackTrace();
-
-                    }
-                    Address obj = addressList.get(0);
-                    address=obj.getAddressLine(0);
-                    LatLng latlng1 = new LatLng(obj.getLatitude(), obj.getLongitude());
-                    mMap.clear();
-                    mMap.addMarker(new MarkerOptions().position(latlng1).title(address));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng1));
-                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(@NonNull Marker marker) {
-                            Intent intent = new Intent(MapsActivity.this, markerClickActivity.class);
-                            intent.putExtra("Address_massage", address);
-                            startActivity(intent);
-                            return false;
-                        }
-                    });
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        searchView = findViewById(R.id.sv_location);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                String location = searchView.getQuery().toString();
+//                List<Address> addressList = null;
+//                if (location != null || !location.equals("")) {
+//
+//                    Geocoder geocoder = new Geocoder(MapsActivity.this);
+//                    try {
+//                        addressList = geocoder.getFromLocationName(location, 1);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//
+//                    }
+//                    Address obj = addressList.get(0);
+//                    address = obj.getAddressLine(0);
+//                    LatLng latlng1 = new LatLng(obj.getLatitude(), obj.getLongitude());
+//                    mMap.clear();
+//                    mMap.addMarker(new MarkerOptions().position(latlng1).title(address));
+//                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng1));
+//                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                        @Override
+//                        public boolean onMarkerClick(@NonNull Marker marker) {
+//                            Intent intent = new Intent(MapsActivity.this, markerClickActivity.class);
+//                            intent.putExtra("Address_massage", address);
+//                            startActivity(intent);
+//                            return false;
+//                        }
+//                    });
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
     }
 
     @Override
@@ -103,37 +104,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        getLocation();
 //        if(isLocationPermissionGranted())
 //        {
-            Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(@NonNull LatLng latLng) {
-                    mMap.clear();
-                    try{
-                        List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                        Address obj = addresses.get(0);
-                        address = obj.getAddressLine(0);
-                        String textforToast=address+"\nPlease Click on Marker for Set Notification or Alarm";
-                        Toast toast=Toast.makeText(getApplicationContext(),textforToast,Toast.LENGTH_LONG);
-                        toast.setMargin(50,50);
-                        toast.show();
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(address));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull LatLng latLng) {
+                mMap.clear();
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    Address obj = addresses.get(0);
+                    address = obj.getAddressLine(0);
+                    String textforToast = address + "\nPlease Click on Marker for Set Notification or Alarm";
+                    Toast toast = Toast.makeText(getApplicationContext(), textforToast, Toast.LENGTH_LONG);
+                    toast.setMargin(50, 50);
+                    toast.show();
+                    mMap.addMarker(new MarkerOptions().position(latLng).title(address));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-                    }
-                    catch(IOException e){
-                        System.out.println(e);
-                    }
+                } catch (IOException e) {
+                    System.out.println(e);
                 }
-            });
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(@NonNull Marker marker) {
-                    Intent intent = new Intent(MapsActivity.this, markerClickActivity.class);
-                    intent.putExtra("Address_massage", address);
-                    startActivity(intent);
-                    return false;
-                }
-            });
+            }
+        });
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull Marker marker) {
+                Intent intent = new Intent(MapsActivity.this, markerClickActivity.class);
+                intent.putExtra("Address_massage", address);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
 
 
 //        }

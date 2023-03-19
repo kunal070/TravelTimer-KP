@@ -24,23 +24,23 @@
         map:layoutDescription="@xml/activity_maps_xml_constraintlayout_scene">
 
 
-        <SearchView
-            android:id="@+id/sv_location"
-            android:layout_width="394dp"
-            android:layout_height="54dp"
-            android:layout_marginBottom="668dp"
-            android:background="@drawable/bg_white_rounded"
-            android:iconifiedByDefault="false"
-            android:persistentDrawingCache="animation"
-            android:queryHint="Search.."
-            map:layout_constraintBottom_toBottomOf="parent"
-            map:layout_constraintEnd_toEndOf="parent"
-            map:layout_constraintHorizontal_bias="0.0"
-            map:layout_constraintStart_toStartOf="parent"
-            map:layout_constraintTop_toTopOf="parent"
-            map:layout_constraintVertical_bias="0.005">
+<!--        <SearchView-->
+<!--            android:id="@+id/sv_location"-->
+<!--            android:layout_width="394dp"-->
+<!--            android:layout_height="54dp"-->
+<!--            android:layout_marginBottom="668dp"-->
+<!--            android:background="@drawable/bg_white_rounded"-->
+<!--            android:iconifiedByDefault="false"-->
+<!--            android:persistentDrawingCache="animation"-->
+<!--            android:queryHint="Search.."-->
+<!--            map:layout_constraintBottom_toBottomOf="parent"-->
+<!--            map:layout_constraintEnd_toEndOf="parent"-->
+<!--            map:layout_constraintHorizontal_bias="0.0"-->
+<!--            map:layout_constraintStart_toStartOf="parent"-->
+<!--            map:layout_constraintTop_toTopOf="parent"-->
+<!--            map:layout_constraintVertical_bias="0.005">-->
 
-        </SearchView>
+<!--        </SearchView>-->
 
 
 
