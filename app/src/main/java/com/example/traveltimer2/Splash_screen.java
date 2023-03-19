@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class Splash_screen extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 2000; // 2 seconds
+    private static int SPLASH_TIME_OUT = 1500; // 2 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
