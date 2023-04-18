@@ -67,50 +67,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--    <SeekBar-->
+<!--        android:id="@+id/seekBar"-->
+<!--        android:layout_width="226dp"-->
+<!--        android:layout_height="59dp"-->
+<!--        android:layout_marginStart="93dp"-->
+<!--        android:layout_marginTop="587dp"-->
+<!--        android:layout_marginEnd="92dp"-->
+<!--        android:layout_marginBottom="85dp"-->
+<!--        android:indeterminate="false"-->
+<!--        android:max="3000"-->
+<!--        android:min="20"-->
+<!--        android:progressTint="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="226dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="587dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginBottom="85dp"
-        android:indeterminate="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+            android:layout_marginTop="587dp"
+            android:layout_marginBottom="85dp"
+        android:progress="50"
         android:max="3000"
         android:min="20"
-        android:progressTint="@color/black"
+        android:thumb="@drawable/custom_thumb"
+        android:progressDrawable="@drawable/custom_seekbar_progress"
+        android:thumbTint="@color/seekbar_thumb_color"
+        android:thumbTintMode="src_in"
+        android:splitTrack="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/textViewSeekBar"
-        android:layout_width="179dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="632dp"
-        android:layout_marginEnd="116dp"
-        android:layout_marginBottom="71dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewSeekBar2"
-        android:layout_width="178dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="553dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="119dp"
-        android:text="Set Range in meter :"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textViewSeekBar"
+            android:layout_width="179dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="632dp"
+            android:layout_marginEnd="116dp"
+            android:layout_marginBottom="71dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewSeekBar2"
+            android:layout_width="178dp"
+            android:layout_height="59dp"
+            android:layout_marginStart="93dp"
+            android:layout_marginTop="553dp"
+            android:layout_marginEnd="140dp"
+            android:layout_marginBottom="119dp"
+            android:text="Set Range in meter :"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

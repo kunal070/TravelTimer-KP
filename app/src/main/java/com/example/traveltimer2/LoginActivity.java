@@ -2,7 +2,9 @@ package com.example.traveltimer2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText, passwordEditText;
     private Button loginButton, signupButton;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +27,15 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
-//        signupButton = findViewById(R.id.signupButton);
+
+
+        signupButton = findViewById(R.id.signupButton);
+
+
+        SessionManager sessionManager;
+
+        sessionManager = new SessionManager(getApplicationContext());
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
                 // Validate user credentials
                 if (isValid(email, password)) {
                     // Navigate to home activity
+
+                    sessionManager.createLoginSession(email,password);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -42,14 +57,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        signupButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Navigate to signup activity
-//                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to signup activity
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean isValid(String email, String password) {

@@ -75,7 +75,7 @@ public class AlarmFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //this is valid code
-
+        addresses.clear();
         String url =  getActivity().getApplicationContext().getString(R.string.read);
 
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());

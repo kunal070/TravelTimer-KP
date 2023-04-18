@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:orientation="vertical"-->
-<!--    android:padding="16dp"-->
-<!--    tools:context=".LoginActivity">-->
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Login"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/emailEditText"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="Email" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/passwordEditText"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="Password"-->
-<!--        android:inputType="textPassword" />-->
-
-
-
-
-<!--</LinearLayout>-->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/login_1"
@@ -94,6 +63,7 @@
         android:paddingRight="10dp"
         android:background="@drawable/rectangle_2"
         android:elevation="2dp"
+        android:inputType="textPassword"
         android:hint="Enter Your Password"
         >
 

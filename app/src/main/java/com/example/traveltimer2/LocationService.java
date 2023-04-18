@@ -1,6 +1,9 @@
 package com.example.traveltimer2;
 
+import static androidx.core.app.NotificationCompat.EXTRA_NOTIFICATION_ID;
+
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,16 +14,20 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,22 +50,24 @@ import java.util.List;
 import java.util.Map;
 
 public class LocationService extends Service {
-    private String url2 = getApplicationContext().getString(R.string.read);
-    private String url = getApplicationContext().getString(R.string.delete);
+    final String NOTIFICATION_CHANNEL_ID = "10001" ;
+    final String default_notification_channel_id = "default" ;
+
 
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
             if (locationResult != null && locationResult.getLastLocation() != null) {
+                 String url2 = getApplicationContext().getString(R.string.read);
+                String url = getApplicationContext().getString(R.string.delete);
                 double latitude = locationResult.getLastLocation().getLatitude();
                 double longitude = locationResult.getLastLocation().getLongitude();
                 Log.d("LOCATION_UPDATE", latitude + "," + longitude);
                 String s ="LOCATION_UPDATE : "+ latitude + "," + longitude;
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
 
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//            String url2="";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url2,
                         new Response.Listener<String>(){
                             @Override
@@ -109,7 +118,6 @@ public class LocationService extends Service {
                                                             @Override
                                                             public void onResponse(String response)
                                                             {
-                                                                //responce code
 
                                                             }
                                                         }, new Response.ErrorListener() {
@@ -129,13 +137,119 @@ public class LocationService extends Service {
                                                 };
                                                 queue.add(stringRequest);
 
-                                                Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-                                                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+                                                addresses.remove(address1);
 
-                                                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-                                                long triggerTime = SystemClock.elapsedRealtime() + 5000;
-                                                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerTime, pendingIntent);
+
+                                                Context context = getApplicationContext();
+
+                                                Intent intent = new Intent(context, AlarmReceiver.class);
+                                                intent.putExtra("message", "Wake up!");
+                                                intent.putExtra("address", address1);
+                                                // Set the message to be displayed in the notification
+
+                                                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+                                                long triggerTime = System.currentTimeMillis() + 10000; // 10 seconds from now
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                                                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                                                } else {
+                                                    alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                                                }
+
+
+                                            }
+
+
+                                        }
+                                        if(jsonObject.getInt("flag")==2){
+                                            String address1=jsonObject.getString("Address");
+                                            int distance=jsonObject.getInt("radious");
+                                            double latitudein = 0;
+                                            double longitudein = 0;
+                                            String locationAddress = address1;
+                                            Geocoder geocoder = new Geocoder(getApplicationContext());
+                                            List<Address> addresses = geocoder.getFromLocationName(locationAddress, 1);
+                                            if (addresses != null && !addresses.isEmpty()) {
+                                                Address address = addresses.get(0);
+                                                latitudein = address.getLatitude();
+                                                longitudein = address.getLongitude();
+
+                                                Log.d("TAG", "Latitude: " + latitude + ", Longitude: " + longitude);
+                                            } else {
+                                                Log.d("TAG", "No address found for location: " + locationAddress);
+                                            }
+
+                                            Location location1 = new Location("");
+                                            location1.setLatitude(latitude);
+                                            location1.setLongitude(longitude);
+                                            Location location2 = new Location("");
+                                            location2.setLatitude(latitudein);
+                                            location2.setLongitude(longitudein);
+
+                                            float distanceMeters = location1.distanceTo(location2);
+
+
+                                            Log.e("Location Distance ",location1+" to "+location2+" is "+distanceMeters);
+
+                                            //set Alarm if Place is Reached.
+
+                                            if(distanceMeters<=distance){
+
+                                                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                                                        new Response.Listener<String>(){
+                                                            @Override
+                                                            public void onResponse(String response)
+                                                            {
+
+                                                            }
+                                                        }, new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        //error code
+
+
+                                                    }
+                                                }){
+                                                    protected Map<String, String> getParams ()
+                                                    {
+                                                        Map<String, String> paramV = new HashMap<>();
+                                                        paramV.put("address",address1);
+                                                        return paramV;
+                                                    }
+                                                };
+                                                queue.add(stringRequest);
+
+                                                addresses.remove(address1);
+
+
+
+                                                Context context = getApplicationContext();
+
+                                                Intent intent = new Intent(context, AlertReciver.class);
+                                                intent.putExtra("message", "Wake up!");
+
+                                                intent.putExtra("address", address1);// Set the message to be displayed in the notification
+
+                                                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+                                                long triggerTime = System.currentTimeMillis() + 10000; // 10 seconds from now
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                                                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                                                } else {
+                                                    alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                                                }
+
+
                                             }
 
 
@@ -177,38 +291,41 @@ public class LocationService extends Service {
         String channelId = "location_notification_channel";
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent = new Intent();
-        PendingIntent pendingIntent = PendingIntent.getActivity(
+        PendingIntent pendingIntent1 = PendingIntent.getActivity(
                 getApplicationContext(),
                 0,
                 resultIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
-
+//
         NotificationCompat.Builder builder = new NotificationCompat.Builder(
                 getApplicationContext(),
                 channelId
         );
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("Location Service");
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setContentText("Running");
-        builder.setContentIntent(pendingIntent);
-        builder.setAutoCancel(false);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Location Service")
+                .setDefaults(NotificationCompat.PRIORITY_MIN)
+                .setContentText("Running")
+                .setContentIntent(pendingIntent1)
+                .setChannelId(channelId)
+                .setPriority(NotificationCompat.PRIORITY_MIN);
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (notificationManager != null && notificationManager.getNotificationChannel(channelId) == null) {
                 NotificationChannel notificationChannel = new NotificationChannel(
                         channelId,
                         "Location Service",
-                        NotificationManager.IMPORTANCE_HIGH
+                        NotificationManager.IMPORTANCE_DEFAULT
                 );
                 notificationChannel.setDescription("This channel is used by notification service");
                 notificationManager.createNotificationChannel(notificationChannel);
             }
         }
+
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(4000);
+        locationRequest.setInterval(1000);
         locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -223,7 +340,7 @@ public class LocationService extends Service {
             return;
         }
         LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
-        startForeground(Constants.LOCATION_SERVICE_ID,builder.build());
+        startForeground(1,builder.build());
     }
 
     private void stopLocationService(){
@@ -246,6 +363,11 @@ public class LocationService extends Service {
         }
         return super.onStartCommand(intent, flags, startId);
     }
+
+
+
+
+
 
 
 

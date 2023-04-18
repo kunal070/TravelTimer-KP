@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -35,12 +36,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        SessionManager sessionManager;
+
+        sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.checkLogin();
 
         if(ContextCompat.checkSelfPermission(
                 getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
@@ -70,10 +78,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                Intent intentOfSetNotification = new Intent(MainActivity.this, MainActivity.class);
 
-
-
-
+                startActivity(intentOfSetNotification);
+            }
+        });
 
 
     }

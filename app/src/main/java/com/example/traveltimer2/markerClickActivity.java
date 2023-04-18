@@ -38,9 +38,6 @@ public class markerClickActivity extends AppCompatActivity {
     Intent intent;
     Statement st;
     String url ;
-//    DatabaseReference reff;
-    private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
 
 
     @Override
@@ -60,6 +57,8 @@ public class markerClickActivity extends AppCompatActivity {
         textOfSeekBar=findViewById(R.id.textViewSeekBar);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -137,7 +136,7 @@ public class markerClickActivity extends AppCompatActivity {
                         paramV.put("address", location);
                         paramV.put("flag", "1");
                         paramV.put("userid", "1");
-                        paramV.put("radious",textOfSeekBar.toString());
+                        paramV.put("radious",seekBar.getProgress()+"");
                         return paramV;
                     }
                 };
@@ -202,7 +201,7 @@ public class markerClickActivity extends AppCompatActivity {
                     paramV.put("address", location);
                     paramV.put("flag", "2");
                     paramV.put("userid", "1");
-                    paramV.put("radious",textOfSeekBar.toString());
+                    paramV.put("radious",seekBar.getProgress()+"");
                     return paramV;
                 }
             };

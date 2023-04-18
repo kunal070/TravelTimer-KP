@@ -1,5 +1,8 @@
 package com.example.traveltimer2;
 
+import android.media.Ringtone;
+
+
 import java.util.ArrayList;
 
 public class Constants {
@@ -7,7 +10,10 @@ public class Constants {
     static final String ACTION_START_LOCATION_SERVICE="startLocationService";
     static final String ACTION_STOP_LOCATION_SERVICE="stopLocationService";
 
-    public static final ArrayList<String> addresses=new ArrayList<>();
+    public static ArrayList<String> addresses=new ArrayList<>();
+
+    public static Ringtone ringtone;
+
 
 
 }
