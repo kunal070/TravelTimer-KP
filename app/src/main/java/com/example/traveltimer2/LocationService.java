@@ -104,28 +104,21 @@ public class LocationService extends Service {
                                             location2.setLongitude(longitudein);
 
                                             float distanceMeters = location1.distanceTo(location2);
-
-
                                             Log.e("Location Distance ",location1+" to "+location2+" is "+distanceMeters);
-
                                             //set Alarm if Place is Reached.
-
                                             if(distanceMeters<=distance){
-
                                                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                                                         new Response.Listener<String>(){
                                                             @Override
                                                             public void onResponse(String response)
                                                             {
-
+                                                                //Response
                                                             }
                                                         }, new Response.ErrorListener() {
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
                                                         //error code
-
-
                                                     }
                                                 }){
                                                     protected Map<String, String> getParams ()
@@ -136,13 +129,8 @@ public class LocationService extends Service {
                                                     }
                                                 };
                                                 queue.add(stringRequest);
-
                                                 addresses.remove(address1);
-
-
-
                                                 Context context = getApplicationContext();
-
                                                 Intent intent = new Intent(context, AlarmReceiver.class);
                                                 intent.putExtra("message", "Wake up!");
                                                 intent.putExtra("address", address1);
@@ -233,13 +221,9 @@ public class LocationService extends Service {
 
                                                 Intent intent = new Intent(context, AlertReciver.class);
                                                 intent.putExtra("message", "Wake up!");
-
                                                 intent.putExtra("address", address1);// Set the message to be displayed in the notification
-
                                                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
                                                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
                                                 long triggerTime = System.currentTimeMillis() + 10000; // 10 seconds from now
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                                     alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);

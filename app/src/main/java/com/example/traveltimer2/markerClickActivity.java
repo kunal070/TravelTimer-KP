@@ -166,7 +166,6 @@ public class markerClickActivity extends AppCompatActivity {
 //            reff.push().setValue(location+"1");
 
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-//            String url="";
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>(){
                         @Override
@@ -174,13 +173,7 @@ public class markerClickActivity extends AppCompatActivity {
                         {
                             //responce code
                             if(response.equals("success")){
-//                                Toast.makeText(getApplicationContext(),"Data INserted",Toast.LENGTH_SHORT).show();
-                            }
-                            else if(response.equals("failed")){
-//                                Toast.makeText(getApplicationContext(),"Data Error",Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-//                                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                            }else{
                                 Log.e(
                                         "Error",response
                                 );
@@ -189,11 +182,7 @@ public class markerClickActivity extends AppCompatActivity {
                         }
                     }, new Response.ErrorListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    //error code
-
-
-                }
+                public void onErrorResponse(VolleyError error) {}
             }){
                 protected Map<String, String> getParams ()
                 {

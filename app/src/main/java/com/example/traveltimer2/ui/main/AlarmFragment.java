@@ -77,15 +77,12 @@ public class AlarmFragment extends Fragment {
         //this is valid code
         addresses.clear();
         String url =  getActivity().getApplicationContext().getString(R.string.read);
-
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//            String url="";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response)
                     {
-                        //responce code
                         try {
                             JSONArray jsonArray=new JSONArray(response);
                             for(int i=0;i<jsonArray.length();i++){
@@ -98,16 +95,10 @@ public class AlarmFragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                //error code
-
-
-            }
+            public void onErrorResponse(VolleyError error) {}
         });
         queue.add(stringRequest);
         listView=getActivity().findViewById(R.id.list_item_alarm);

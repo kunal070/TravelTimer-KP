@@ -1,5 +1,8 @@
 package com.example.traveltimer2;
 
+import static android.app.PendingIntent.getActivity;
+import static com.example.traveltimer2.Constants.addresses;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -11,10 +14,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEditText, passwordEditText;
     private Button loginButton, signupButton;
+
+    String email,pass;
 
 
 
@@ -30,12 +46,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         signupButton = findViewById(R.id.signupButton);
-
-
         SessionManager sessionManager;
-
         sessionManager = new SessionManager(getApplicationContext());
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
                 // Validate user credentials
                 if (isValid(email, password)) {
                     // Navigate to home activity
-
                     sessionManager.createLoginSession(email,password);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -67,12 +78,45 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isValid(String email, String password) {
-        // Validate user credentials here
-        if(email.equals("demo@gmail.com") && password.equals("demo")){
+    private boolean isValid(String email1, String password) {
+
+        if(email1.equals("demo@gmail.com") && password.equals("demo")){
 
             return true;
         }
+        // Validate user credentials here
+        String url =  "192.168.6.194/CRUDAPI/readuser.php";
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            JSONArray jsonArray=new JSONArray(response);
+                            for(int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject=jsonArray.getJSONObject(i);
+                                if(jsonObject.getInt("flag")==1){
+                                     email=jsonObject.getString("email");
+                                     pass=jsonObject.getString("pass");
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {}
+        });
+        queue.add(stringRequest);
+        if(email.equals(email) && password.equals(pass)){
+
+            return true;
+        }
+
+
         return false;
     }
+
 }
